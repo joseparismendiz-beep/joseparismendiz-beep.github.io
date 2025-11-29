@@ -1,0 +1,1547 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>¡Te Amo! | Nuestro Rincón Secreto ✨</title>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+    <style>
+        /* Estilos CSS Base */
+        :root {
+            --primary-color: #f7a4b6; /* Rosa Corazón */
+            --secondary-color: #8c73a3; /* Morado Suave */
+            --background-light: #fdf6f9; /* Fondo Rosa Muy Claro */
+            --text-dark: #3b3b4d; /* Texto Oscuro Suave */
+            --text-light: #ffffff; /* Texto Blanco */
+            --button-hover: #e88fa2; /* Rosa de Botón Hover */
+            --box-shadow-soft: 0 10px 30px rgba(0, 0, 0, 0.08);
+            --border-radius: 20px;
+            --transition-speed: 0.4s;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: var(--background-light);
+            color: var(--text-dark);
+            margin: 0;
+            padding: 0;
+            line-height: 1.7;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            min-height: 100vh;
+            opacity: 1; 
+            transition: opacity 1s ease-in;
+        }
+
+        /* El contenido principal está inicialmente oculto */
+        #main-content {
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 1s ease-in;
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        
+        #main-content.visible {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        /* --- PANTALLAS DE INICIO (TEXTO y BOTÓN) --- */
+        #welcome-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: var(--background-light);
+            color: var(--primary-color);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-family: 'Playfair Display', serif;
+            font-size: 5em;
+            font-weight: 700;
+            z-index: 9999;
+            opacity: 1;
+            animation: text-pop 1s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
+        }
+
+        #welcome-overlay.hidden {
+            animation: bye-zoom 1.5s forwards;
+            pointer-events: none;
+        }
+
+        #music-gate {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: var(--background-light);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            z-index: 9998; 
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.8s ease, visibility 0.8s ease;
+            text-align: center;
+        }
+        #music-gate.visible {
+            opacity: 1;
+            visibility: visible;
+        }
+        #music-gate h3 {
+            font-family: 'Playfair Display', serif;
+            color: var(--secondary-color);
+            font-size: 2.5em;
+            margin-bottom: 20px;
+        }
+        
+        /* Animaciones */
+        @keyframes text-pop {
+            0% { transform: scale(0.6); opacity: 0; }
+            80% { transform: scale(1.05); opacity: 1; }
+            100% { transform: scale(1); opacity: 1; }
+        }
+
+        @keyframes bye-zoom {
+            0% { transform: scale(1); opacity: 1; }
+            100% { transform: scale(1.2); opacity: 0; visibility: hidden; }
+        }
+
+        /* Keyframes para los corazones, definidos en CSS para mejor rendimiento */
+        @keyframes fall {
+            to {
+                transform: translateY(105vh) rotate(360deg);
+            }
+        }
+        
+        .container {
+            width: 95%;
+            max-width: 1000px;
+            margin: 50px auto;
+            background-color: var(--text-light);
+            padding: 50px;
+            border-radius: var(--border-radius);
+            box-shadow: var(--box-shadow-soft);
+            text-align: center;
+        }
+
+        h1 {
+            font-family: 'Playfair Display', serif;
+            color: var(--primary-color);
+            font-size: 3.8em;
+            margin-bottom: 20px;
+            text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.05);
+        }
+
+        h2 {
+            font-family: 'Playfair Display', serif;
+            color: var(--secondary-color);
+            margin-top: 40px;
+            margin-bottom: 25px;
+            font-size: 2em;
+        }
+
+        p {
+            font-weight: 300;
+            color: #6a6a7c;
+        }
+
+        /* --- Botones --- */
+        .button-group {
+            margin: 40px 0;
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 25px;
+        }
+
+        .fancy-button {
+            background-color: var(--primary-color);
+            color: var(--text-light);
+            padding: 14px 28px;
+            border: none;
+            border-radius: 50px;
+            font-size: 1.05em;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background-color var(--transition-speed), transform var(--transition-speed);
+            box-shadow: 0 6px 15px rgba(247, 164, 182, 0.4);
+            letter-spacing: 0.5px;
+            text-transform: uppercase;
+        }
+        
+        #music-gate-button {
+            font-size: 1.4em;
+            padding: 18px 40px;
+        }
+
+        .fancy-button:hover {
+            background-color: var(--button-hover);
+            transform: translateY(-5px);
+            box-shadow: 0 8px 20px rgba(247, 164, 182, 0.6);
+        }
+
+        /* --- Carrusel, Galería, Modales, Footer y Corazones --- */
+        .carousel-container {
+            width: 100%;
+            overflow: hidden;
+            margin: 50px auto;
+            border-radius: var(--border-radius);
+            box-shadow: var(--box-shadow-soft);
+            position: relative;
+            border: 4px solid var(--secondary-color);
+        }
+
+        .carousel-slide {
+            display: flex;
+        }
+
+        .carousel-slide img {
+            width: 100%;
+            flex-shrink: 0;
+            height: 550px; 
+            object-fit: cover;
+        }
+
+        .carousel-button {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            background-color: rgba(140, 115, 163, 0.6); 
+            color: white;
+            border: none;
+            padding: 18px 22px; 
+            cursor: pointer;
+            font-size: 2.2em; 
+            border-radius: 50%; 
+            z-index: 10;
+            transition: background-color var(--transition-speed), transform var(--transition-speed), box-shadow var(--transition-speed);
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2); 
+            display: flex; 
+            justify-content: center;
+            align-items: center;
+        }
+
+        .carousel-button:hover {
+            background-color: var(--secondary-color); 
+            transform: translateY(-50%) scale(1.05); 
+            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.3); 
+        }
+
+        .carousel-button.prev { left: 15px; }
+        .carousel-button.next { right: 15px; }
+
+        .gallery {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 40px; 
+            margin-top: 30px;
+        }
+
+        .gallery img {
+            width: 100%;
+            height: 250px; 
+            object-fit: cover;
+            border-radius: 25px;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+            transition: transform var(--transition-speed);
+            filter: brightness(0.98); 
+            cursor: pointer;
+            border: 5px solid var(--text-light);
+        }
+
+        .gallery img:hover {
+            transform: scale(1.03);
+            filter: brightness(1);
+        }
+
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(247, 164, 182, 0.3);
+            backdrop-filter: blur(5px);
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.3s ease, visibility 0.3s ease;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .modal.active {
+            display: flex;
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .modal-content {
+            background-color: var(--text-light);
+            padding: 40px;
+            border-radius: var(--border-radius);
+            box-shadow: 0 15px 50px rgba(0, 0, 0, 0.2);
+            max-width: 450px;
+            width: 90%;
+            position: relative;
+            transform: scale(0.8);
+            opacity: 0;
+            transition: transform 0.4s ease, opacity 0.4s ease;
+        }
+
+        .modal.active .modal-content {
+            transform: scale(1);
+            opacity: 1;
+        }
+
+        .close-button {
+            color: var(--primary-color);
+            position: absolute;
+            top: 15px;
+            right: 25px;
+            font-size: 40px;
+            font-weight: 300;
+            cursor: pointer;
+        }
+        
+        .modal-content h2 {
+            font-family: 'Playfair Display', serif;
+            color: var(--primary-color);
+            font-size: 2.2em;
+            margin-bottom: 20px;
+        }
+        
+        .footer {
+            margin-top: 50px;
+            padding: 30px;
+            background-color: var(--secondary-color);
+            color: var(--text-light);
+            width: 100%;
+            text-align: center;
+            font-size: 1.1em;
+            box-shadow: 0 -5px 15px rgba(0, 0, 0, 0.05);
+            font-weight: 300;
+        }
+
+        .heart {
+            position: absolute;
+            top: -10vh; 
+            color: #f7a4b6; 
+            font-size: 1.5em; 
+            pointer-events: none; 
+            z-index: 50; 
+            opacity: 0.8;
+        }
+        
+        /* ======================================= */
+        /* === ESTILOS DEL MENÚ DE MÚSICA FLOTANTE === */
+        /* ======================================= */
+        #music-control-menu {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            z-index: 999; 
+            pointer-events: none; 
+            opacity: 0;
+            transition: opacity 1s ease;
+        }
+        
+        #main-content.visible #music-control-menu {
+            pointer-events: auto;
+            opacity: 1;
+        }
+        
+        /* --- El Botón Flotante (La "bolita") --- */
+        #music-toggle-button {
+            width: 60px;
+            height: 60px;
+            background-color: var(--primary-color);
+            border-radius: 50%;
+            color: var(--text-light);
+            font-size: 24px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            cursor: pointer;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+            transition: transform 0.3s, background-color 0.3s;
+            position: relative;
+            z-index: 100; 
+        }
+
+        #music-toggle-button:hover {
+            transform: scale(1.05);
+            background-color: var(--button-hover);
+        }
+
+        /* --- El Menú Desplegable --- */
+        #music-dropdown {
+            position: absolute;
+            bottom: 80px; 
+            right: 0;
+            width: 200px;
+            background-color: var(--text-light);
+            border-radius: var(--border-radius);
+            padding: 15px;
+            box-shadow: var(--box-shadow-soft);
+            visibility: hidden;
+            opacity: 0;
+            transform: translateY(10px);
+            transition: visibility var(--transition-speed), opacity var(--transition-speed), transform var(--transition-speed);
+        }
+
+        #music-dropdown.active {
+            visibility: visible;
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        #music-dropdown h4 {
+            font-size: 1.1em;
+            color: var(--secondary-color);
+            margin-top: 0;
+            margin-bottom: 10px;
+            font-weight: 600;
+        }
+
+        /* Controles de Reproducción */
+        .playback-controls {
+            display: flex;
+            justify-content: space-around;
+            margin-bottom: 10px;
+        }
+
+        .control-button {
+            background: none;
+            border: none;
+            color: var(--secondary-color);
+            font-size: 1.5em;
+            cursor: pointer;
+            transition: color 0.2s, transform 0.2s;
+        }
+
+        .control-button:hover {
+            color: var(--primary-color);
+            transform: scale(1.1);
+        }
+
+        /* Volumen Slider */
+        .volume-control {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-top: 10px;
+        }
+
+        .volume-control input[type="range"] {
+            -webkit-appearance: none;
+            width: 100%;
+            height: 5px;
+            background: var(--primary-color);
+            border-radius: 5px;
+            outline: none;
+            opacity: 0.7;
+            transition: opacity 0.2s;
+        }
+
+        .volume-control input[type="range"]::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            appearance: none;
+            width: 15px;
+            height: 15px;
+            border-radius: 50%;
+            background: var(--secondary-color);
+            cursor: pointer;
+        }
+
+        /* --- ESTILOS CUTE DE GATITOS PARA "DETALLES" --- */
+        .details-section {
+            margin-top: 60px;
+            padding: 50px 20px; 
+            background: linear-gradient(135deg, #ffe6f2 0%, #fef3e9 100%); /* Degradado pastel */
+            border-radius: var(--border-radius);
+            box-shadow: 0 15px 40px rgba(247, 164, 182, 0.2); 
+            position: relative;
+            overflow: hidden; 
+            border: 2px dashed #ffb3cc; /* Borde punteado lindo */
+        }
+        /* Patrón de patitas de gato de fondo */
+        .details-section::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            /* Patrón de patitas (SVG simplificado) */
+            background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="50" height="50"><circle cx="15" cy="15" r="5" fill="%23f7d4e5"/><circle cx="35" cy="15" r="5" fill="%23f7d4e5"/><circle cx="25" cy="30" r="10" fill="%23f7d4e5"/></svg>');
+            background-repeat: repeat;
+            opacity: 0.1; 
+            z-index: 1;
+            pointer-events: none;
+        }
+
+
+        .details-section h2 {
+            font-family: 'Playfair Display', serif;
+            font-size: 2.8em;
+            color: var(--secondary-color);
+            margin-bottom: 25px;
+            position: relative;
+            display: inline-block;
+        }
+        .details-section h2::after {
+            content: '🐾'; 
+            position: absolute;
+            right: -40px;
+            top: 5px;
+            font-size: 0.7em;
+            animation: bounce 1.5s infinite ease-in-out;
+        }
+
+        /* Animación de "rebote" para los emojis */
+        @keyframes bounce {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-8px); }
+        }
+
+        .details-grid {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 35px; 
+            margin-top: 40px;
+            position: relative;
+            z-index: 2; 
+        }
+        
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-10px); }
+        }
+
+        .detail-card {
+            background: linear-gradient(160deg, #ffffff 0%, #fcf7f8 100%); 
+            padding: 30px; 
+            border-radius: 25px; 
+            box-shadow: 0 8px 25px rgba(247, 164, 182, 0.3); 
+            text-align: center;
+            width: 280px; 
+            transition: transform 0.4s ease, box-shadow 0.4s ease;
+            position: relative;
+            overflow: visible; 
+            border: 3px solid #ffd1e0; 
+            animation: float 4s ease-in-out infinite; 
+            animation-delay: calc(var(--order) * 0.2s); 
+        }
+        .detail-card:nth-child(1) { --order: 1; }
+        .detail-card:nth-child(2) { --order: 2; }
+        .detail-card:nth-child(3) { --order: 3; }
+
+
+        .detail-card:hover {
+            transform: translateY(-15px) scale(1.03); 
+            box-shadow: 0 18px 45px rgba(247, 164, 182, 0.5); 
+        }
+        
+        /* Icono de Gatito dentro de la tarjeta */
+        .detail-card .cute-icon {
+            font-size: 3.5em; 
+            color: var(--secondary-color);
+            margin-bottom: 20px;
+            display: inline-block; 
+            position: relative;
+            z-index: 3;
+            transition: transform 0.3s ease;
+            animation: pulse-cute 2s infinite ease-in-out; 
+        }
+
+        @keyframes pulse-cute {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.08); }
+        }
+
+        /* Efecto de "Miau" al pasar el ratón */
+        .detail-card::after {
+            content: '💖Nya~'; 
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            font-size: 0.9em;
+            color: var(--primary-color);
+            background-color: var(--text-light);
+            padding: 5px 10px;
+            border-radius: 10px;
+            opacity: 0;
+            transform: translateY(10px) scale(0.5);
+            transition: opacity 0.3s ease, transform 0.3s ease;
+            pointer-events: none;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+            z-index: 4;
+            font-weight: 600;
+        }
+        .detail-card:hover::after {
+            opacity: 1;
+            transform: translateY(0px) scale(1);
+        }
+        .detail-card:hover .cute-icon {
+            transform: translateY(-5px) scale(1.2); 
+            animation: none; 
+        }
+        
+        .detail-card h3 {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.7em; 
+            color: var(--text-dark);
+            margin-top: 0;
+            margin-bottom: 12px;
+            text-shadow: 1px 1px 3px rgba(0,0,0,0.02);
+        }
+        
+        .detail-card p {
+            font-size: 1em; 
+            color: #7d7d8f;
+            line-height: 1.6;
+        }
+        
+        /* --- ESTILOS PARA LA SECCIÓN COSAS QUE AMO --- */
+        #cosas-que-amo {
+            padding: 60px 20px;
+            background-color: var(--background-light); 
+            text-align: center;
+            border-radius: var(--border-radius);
+            margin: 40px auto;
+            max-width: 1000px;
+            box-shadow: var(--box-shadow-soft);
+            width: 95%; 
+        }
+
+        #cosas-que-amo h2 {
+            font-family: 'Playfair Display', serif;
+            color: var(--secondary-color);
+            margin-bottom: 30px;
+            font-size: 2.5em;
+            position: relative;
+        }
+
+        #cosas-que-amo h2::after {
+            content: '❤️';
+            position: absolute;
+            right: -30px;
+            top: -10px;
+            font-size: 0.8em;
+        }
+
+        .cosas-list {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 20px;
+            list-style: none;
+            padding: 0;
+        }
+
+        .cosas-list li {
+            background: var(--text-light); 
+            color: var(--text-dark);
+            padding: 15px 25px;
+            border-radius: 15px;
+            font-weight: 600;
+            flex: 1 1 200px; 
+            max-width: 300px;
+            text-align: left;
+            transition: transform var(--transition-speed), box-shadow var(--transition-speed);
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+            border-left: 5px solid var(--primary-color);
+        }
+
+        .cosas-list li:hover {
+            transform: translateY(-5px) scale(1.02);
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+        }
+
+        /* --- Diseño de Gatitos de Fondo Adicional (patrón general) --- */
+        .kitty-pattern {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none; 
+            z-index: -1; 
+            opacity: 0.05; 
+            background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="100" height="100"><text x="0" y="25" font-size="20" fill="%23f7a4b6">🐱</text><text x="50" y="75" font-size="20" fill="%238c73a3">🐾</text></svg>');
+            background-repeat: repeat;
+        }
+        
+        /* --- ESTILOS PARA EL MINIJUEGO DE AMOR (AÑADIDOS) --- */
+        #love-quiz-section {
+            /* Reutilizamos el estilo de detalles */
+            margin-top: 60px;
+            padding: 50px 20px; 
+            background: linear-gradient(135deg, #e6f2ff 0%, #f3e9fe 100%); /* Degradado Azul/Morado Pastel */
+            border-radius: var(--border-radius);
+            box-shadow: 0 15px 40px rgba(140, 115, 163, 0.2); 
+            border: 2px dashed #b3ccff; 
+        }
+
+        #love-quiz-section h2::after {
+            content: '💖'; 
+            right: -40px;
+        }
+        
+        #quiz-area {
+            background-color: var(--text-light);
+            padding: 30px;
+            border-radius: var(--border-radius);
+            box-shadow: var(--box-shadow-soft);
+            margin: 30px auto;
+            max-width: 500px;
+            border: 3px solid var(--secondary-color);
+        }
+
+        #quiz-question {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.5em;
+            color: var(--primary-color);
+            margin-bottom: 25px;
+            min-height: 40px; /* Para evitar saltos al cambiar el texto */
+        }
+        
+        .quiz-answer-text {
+            margin-top: 25px;
+            font-size: 1.1em;
+            font-weight: 600;
+            color: var(--secondary-color);
+            min-height: 30px; /* Para evitar saltos al cambiar el texto */
+            opacity: 0;
+            transition: opacity 0.5s ease;
+        }
+        /* --- FIN ESTILOS MINIJUEGO --- */
+        
+        /* --- ESTILOS PARA EL MINIJUEGO DE MORITA RUNNER (NUEVO) --- */
+        #morita-runner-section {
+            /* Reutilizamos el estilo de detalles pero con otro color */
+            margin-top: 60px;
+            padding: 50px 20px; 
+            background: linear-gradient(135deg, #f7e6ff 0%, #e9feff 100%); /* Degradado Morado/Azul */
+            border-radius: var(--border-radius);
+            box-shadow: 0 15px 40px rgba(163, 115, 140, 0.2); 
+            border: 2px dashed #ffb3f7; /* Borde rosa claro */
+        }
+
+        #morita-runner-section h2::after {
+            content: '🐾'; 
+            right: -40px;
+        }
+
+        #game-area {
+            width: 90%;
+            max-width: 600px;
+            height: 150px;
+            background-color: #fcfcfc; /* Fondo blanco suave */
+            border-bottom: 5px solid var(--secondary-color);
+            margin: 30px auto 20px;
+            position: relative;
+            overflow: hidden;
+            border-radius: 10px;
+            box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.05);
+        }
+
+        #morita {
+            font-size: 3em;
+            position: absolute;
+            bottom: 0px;
+            left: 20px;
+            transition: transform 0.2s; /* Para la animación de salto suave */
+            user-select: none;
+        }
+
+        #obstacle {
+            font-size: 2.5em;
+            position: absolute;
+            bottom: 0px;
+            right: -50px; /* Inicia fuera de la pantalla */
+            user-select: none;
+            animation: none; /* Se activa con JS */
+        }
+
+        /* Animación del obstáculo moviéndose */
+        @keyframes move-obstacle {
+            0% { right: -50px; }
+            100% { right: 100%; }
+        }
+
+        /* Clase de salto */
+        .jump {
+            animation: morita-jump 0.6s ease-out;
+        }
+
+        @keyframes morita-jump {
+            0% { bottom: 0; }
+            40% { bottom: 100px; }
+            60% { bottom: 100px; }
+            100% { bottom: 0; }
+        }
+
+        #score {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            font-weight: 600;
+            color: var(--primary-color);
+            font-family: 'Playfair Display', serif;
+            font-size: 1.2em;
+        }
+        /* --- FIN ESTILOS MINIJUEGO MORITA RUNNER --- */
+
+
+        @media (max-width: 768px) {
+            .gallery { grid-template-columns: 1fr; }
+            .gallery img { height: 300px; }
+            h1 { font-size: 3em; }
+            .container { padding: 30px; margin: 30px auto; }
+            .carousel-slide img { height: 450px; } 
+            #welcome-overlay { font-size: 3em; }
+            .carousel-button {
+                padding: 12px 15px;
+                font-size: 1.5em;
+            }
+            #music-control-menu {
+                bottom: 20px;
+                right: 20px;
+            }
+            #music-toggle-button {
+                width: 50px;
+                height: 50px;
+                font-size: 20px;
+            }
+            #music-dropdown {
+                bottom: 70px;
+                width: 180px;
+            }
+            .detail-card {
+                width: 100%; 
+                animation: none; 
+            }
+            .details-grid {
+                gap: 20px;
+            }
+            .details-section h2::after {
+                right: -20px; 
+            }
+            #cosas-que-amo h2::after {
+                right: 0;
+            }
+        }
+        @media (max-width: 600px) {
+            .details-section {
+                padding: 30px 15px;
+            }
+        }
+        @media (max-width: 480px) {
+            h1 { font-size: 2.5em; }
+            h2 { font-size: 1.8em; }
+            .fancy-button { width: 100%; margin-bottom: 10px; }
+            .carousel-slide img { height: 380px; } 
+            #welcome-overlay { font-size: 2.5em; }
+            .carousel-button {
+                padding: 10px 12px;
+                font-size: 1.2em;
+            }
+            #music-gate h3 {
+                font-size: 1.8em;
+            }
+            #music-gate-button {
+                font-size: 1.1em;
+            }
+            .details-section h2 {
+                font-size: 2.2em;
+            }
+        }
+    </style>
+</head>
+<body>
+    
+    <div id="welcome-overlay">
+        Bienvenida, mi cielo ❤️
+    </div>
+
+    <audio id="musicPlayer" src="eres.m4a" loop preload="auto"></audio>
+    
+    <div id="music-gate">
+        <h3>¿Quieres escuchar la cancion que yo te dedico con todo mi ser 🎶?</h3>
+        <p>Pulsa el botón para entrar y disfrutar de nuestra música de fondo.</p>
+        <button id="music-gate-button" class="fancy-button" onclick="revealContentAndPlayMusic()">
+            Sí, ¡Quiero entrar!
+        </button>
+    </div>
+
+    <div id="main-content">
+
+        <div id="heart-container"></div>
+        <div class="kitty-pattern"></div>
+        <div class="container"> 
+            <h1>✨ Un Rincón para ti Mi cielo ✨</h1>
+            <p>
+                Cada detalle aquí ha sido pensado con el inmenso amor que siento por ti. Eres mi razón de ser, mi dulce casualidad y la obra más hermosa de mi vida.
+            </p>
+
+            <div class="button-group">
+                <button class="fancy-button" onclick="openModal('modalMensaje')">Un Mensaje Secreto</button>
+                <button class="fancy-button" onclick="openModal('modalRecuerdo')">Nuestro Día Favorito</button>
+                <button class="fancy-button" onclick="alert('¡Te quiero más que al café por la mañana!')">Mi Declaración</button>
+            </div>
+
+            <h2>📸 Carrusel de Dulces Momentos</h2>
+            
+            <div class="carousel-container">
+                <div class="carousel-slide" id="carouselSlide">
+                    <img src="momento 1.jpg">
+                    <img src="momento 3.jpg">
+                    <img src="momento 4.jpg">
+                    <img src="b.jpg">
+                </div>
+                <button class="carousel-button prev" onclick="moveCarousel(-1)">&#10094;</button>
+                <button class="carousel-button next" onclick="moveCarousel(1)">&#10095;</button>
+            </div>
+
+            <h2>💌 Un Vistazo a Nuestros hermosos recuerdos💕</h2>
+            <p>
+                Solo unas cuatro hermosas fotos. ¡Haz clic en cada foto para un mensaje especial!
+            </p>
+            
+            <div class="gallery">
+                <img src="c:\Users\azoni\OneDrive\Desktop\morita\d.jpg" alt="Galería A"
+                    onclick="showPhotoMessage('Sigo pensando que valio la pena❤️💕', 'el esperar ya que por ti paso mi dia a dia muy feliz y eso me hace sentir completo.')">
+                
+                <img src="c:\Users\azoni\OneDrive\Desktop\morita\momento 4.jpg" alt="Galería B"
+                    onclick="showPhotoMessage('Tu Sonrisa, es mi Sol☀️', 'No importa el mometo, mientras estés a mi lado, es el lugar más feliz del mundo.')">
+                                
+                <img src="c:\Users\azoni\OneDrive\Desktop\morita\a.jpg" alt="Galería C"
+                    onclick="showPhotoMessage('En ti encontre la Paz🕊️', 'En tus ojitos encuentro mi refugio. y tu eres mi lugar seguro y mi terapia favorita.')">
+                                
+                <img src="c:\Users\azoni\OneDrive\Desktop\morita\momento 2.png" alt="Galería D"
+                    onclick="showPhotoMessage('Amo Escuchar tu Risa💕', 'Tu risa es mi canción favorita. Me encanta tu humor que es  casi igual al mio y la forma en que me haces ver la vida. ¡Más momentos así, por favor!')">
+            </div>
+            
+            <section id="cosas-que-amo">
+                <h2>Cosas que amo de ti</h2>
+                <ul class="cosas-list">
+                    <li>Tu hermosa sonrisa que ilumina mi día.</li>
+                    <li>La forma en que me cuidas y me haces sentir amado.</li>
+                    <li>Tu inteligencia y tu pasión por aprender.</li>
+                    <li>Cada pequeño detalle que me demuestras.</li>
+                    <li>Que me dejes achucharte como a un gatito.</li>
+                    <li>Tu paciencia infinita conmigo.</li>
+                </ul>
+            </section>
+            
+            <div class="details-section">
+                <h2>💖 Pequeños Detalles que Amo de Ti 💖</h2>
+                <p>
+                    Aquí hay tres recordatorios de las cosas maravillosas que hacen que te ame más y más cada día.
+                </p>
+                
+                <div class="details-grid">
+                    
+                    <div class="detail-card">
+                        <span class="cute-icon">👁️</span> 
+                        <h3>Tu mirada</h3>
+                        <p>Es mi lugar seguro. Cuando me miras, siento que el mundo se detiene y solo existimos tú y yo. Es el mejor momento del día.</p>
+                    </div>
+
+                    <div class="detail-card">
+                        <span class="cute-icon">😂</span>
+                        <h3>Tu Risita Contagiosa</h3>
+                        <p>No hay sonido en el universo que me guste más que el tuyo. Con solo escucharte, mi día se ilumina completamente. Me derrite</p>
+                    </div>
+                    
+                    <div class="detail-card">
+                        <span class="cute-icon">✨</span>
+                        <h3>Tu Alma Bondadosa</h3>
+                        <p>Tu corazón es el más puro que he conocido. La manera en que te preocupas por los demás es algo que admiro profundamente. Eres magia pura.</p>
+                    </div>
+
+                </div>
+            </div>
+
+            <div class="details-section" id="love-quiz-section">
+                <h2>💘 Nuestro Test de Amor Rápido 💘</h2>
+                <p>
+                    ¡Una pequeña sorpresa! Responde mentalmente la pregunta y luego haz clic para ver si acertaste con mi recuerdo.
+                </p>
+                
+                <div id="quiz-area">
+                    <h3 id="quiz-question"></h3>
+                    <button id="reveal-button" class="fancy-button" onclick="revealAnswer()">
+                        ✨ ¡Revelar Respuesta Secreta! ✨
+                    </button>
+                    <p id="quiz-answer" class="quiz-answer-text"></p>
+                </div>
+                
+                <button class="fancy-button" onclick="nextQuestion()" style="margin-top: 20px;">
+                    Siguiente Pregunta (¡Más Recuerdos!)
+                </button>
+            </div>
+            
+            <div class="details-section" id="morita-runner-section">
+                <h2>🎮 ¡Salta para Morita! 🐱</h2>
+                <p>
+                    ¡Ayuda a Morita a saltar y evitar los corazones! Toca la pantalla o haz clic para saltar.
+                </p>
+                
+                <div id="game-area">
+                    <div id="morita">🐱</div>
+                    <div id="obstacle"></div>
+                    <div id="score">Puntos: 0</div>
+                </div>
+                
+                <button id="start-game-button" class="fancy-button" onclick="startGame()">
+                    Comenzar Aventura
+                </button>
+            </div>
+            </div> <div id="modalMensaje" class="modal">
+            <div class="modal-content">
+                <span class="close-button" onclick="closeModal('modalMensaje')">&times;</span>
+                <h2>Mi Corazón Late Por Ti</h2>
+                <p>
+                    Eres todo lo que siempre quise y más. No hay día que no despierte dando gracias por tenerte. Eres mi refugio, mi mejor amiga y la dueña de mis sueños. Prometo cuidar este amor por siempre.
+                </p>
+                <p style="font-weight: 600; color: var(--primary-color);">Te amo hoy mas que ayer pero menos que mañana.</p>
+            </div>
+        </div>
+
+        <div id="modalRecuerdo" class="modal">
+            <div class="modal-content">
+                <span class="close-button" onclick="closeModal('modalRecuerdo')">&times;</span>
+                <h2>¿Recuerdas...🌸?</h2>
+                <p>
+                    que dije que haria muchas cosas y detalles por ti pues aqui ya hace muestra aquello que prometi.
+                </p>
+                <p style="font-style: italic; color: var(--secondary-color);">¡se que lo vamos a lograr mi cielo!</p>
+            </div>
+        </div>
+        
+        <div id="photoModal" class="modal">
+            <div class="modal-content">
+                <span class="close-button" onclick="closeModal('photoModal')">&times;</span>
+                <h2 id="photoModalTitle"></h2>
+                <p id="photoModalMessage"></p>
+            </div>
+        </div>
+
+        <footer class="footer">
+            Hecho con todo el amor que te tengo y apesar de ser un desastre esto va con todo mi amor. — Tu esposito.
+        </footer>
+
+        <div id="music-control-menu">
+            
+            <div id="music-dropdown">
+                <h4>Control de Música</h4>
+                
+                <div class="playback-controls">
+                    <button class="control-button" title="Ir al Inicio" onclick="restartMusic()">
+                        <i class="fa-solid fa-backward-step"></i>
+                    </button>
+                    
+                    <button id="play-pause-button" class="control-button" title="Pausar" onclick="togglePlayPause()">
+                        <i class="fa-solid fa-pause"></i>
+                    </button>
+
+                    <button id="mute-button" class="control-button" title="Silenciar" onclick="toggleMute()">
+                        <i class="fa-solid fa-volume-high"></i>
+                    </button>
+                </div>
+                
+                <div class="volume-control">
+                    <i class="fa-solid fa-volume-low"></i>
+                    <input type="range" id="volume-slider" min="0" max="100" value="70" oninput="setVolume(this.value)">
+                </div>
+
+            </div>
+
+            <div id="music-toggle-button" onclick="toggleMusicMenu()">
+                <i class="fa-solid fa-music"></i>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // --- Variables Globales ---
+        const audio = document.getElementById('musicPlayer');
+        const playPauseButton = document.getElementById('play-pause-button');
+        const muteButton = document.getElementById('mute-button');
+        const volumeSlider = document.getElementById('volume-slider');
+        let currentVolume = 0.7; // Almacena el volumen antes de silenciar
+
+        // --- FUNCIONES DE CONTROL DE MÚSICA ---
+
+        // Función crucial: Iniciar Música y Revelar Contenido
+        function revealContentAndPlayMusic() {
+            const musicGate = document.getElementById('music-gate');
+            const mainContent = document.getElementById('main-content');
+            
+            if (audio && volumeSlider) {
+                // Establece el volumen inicial basado en el slider (70%)
+                currentVolume = parseFloat(volumeSlider.value) / 100;
+                audio.volume = currentVolume;
+
+                audio.play().catch(error => {
+                    // Si la reproducción automática es bloqueada (común en navegadores)
+                    console.error("Error al intentar reproducir el audio automáticamente:", error);
+                });
+                playPauseButton.innerHTML = '<i class="fa-solid fa-pause"></i>';
+                playPauseButton.title = 'Pausar';
+            }
+
+            // Ocultar la pantalla de interacción de música
+            musicGate.style.opacity = '0';
+            setTimeout(() => {
+                musicGate.style.visibility = 'hidden';
+            }, 800); 
+
+            // Revelar el contenido principal
+            mainContent.classList.add('visible');
+
+            // Iniciar el Carrusel y Corazones
+            startAutoSlide();
+            startHeartAnimation();
+        }
+
+        function togglePlayPause() {
+            if (!audio || !playPauseButton) return;
+            if (audio.paused) {
+                // Si estaba muteado, desmutear (para que se escuche al darle play)
+                if (audio.muted && currentVolume > 0) {
+                     audio.muted = false;
+                     audio.volume = currentVolume;
+                     volumeSlider.value = currentVolume * 100;
+                     muteButton.innerHTML = '<i class="fa-solid fa-volume-high"></i>';
+                }
+                audio.play();
+                playPauseButton.innerHTML = '<i class="fa-solid fa-pause"></i>';
+                playPauseButton.title = 'Pausar';
+            } else {
+                audio.pause();
+                playPauseButton.innerHTML = '<i class="fa-solid fa-play"></i>';
+                playPauseButton.title = 'Reproducir';
+            }
+        }
+
+        function toggleMute() {
+            if (!audio || !muteButton || !volumeSlider) return;
+            if (audio.muted) {
+                // Desmutear: Volver al volumen guardado
+                audio.muted = false;
+                audio.volume = currentVolume;
+                muteButton.innerHTML = '<i class="fa-solid fa-volume-high"></i>';
+                muteButton.title = 'Silenciar';
+                volumeSlider.value = currentVolume * 100;
+            } else {
+                // Mutear: Guardar volumen actual y silenciar
+                currentVolume = audio.volume;
+                audio.muted = true;
+                muteButton.innerHTML = '<i class="fa-solid fa-volume-xmark"></i>';
+                muteButton.title = 'Reactivar Sonido';
+                volumeSlider.value = 0;
+            }
+        }
+
+        function setVolume(value) {
+            if (!audio || !muteButton) return;
+            const newVolume = value / 100;
+            audio.volume = newVolume;
+            
+            if (newVolume == 0) {
+                audio.muted = true;
+                muteButton.innerHTML = '<i class="fa-solid fa-volume-xmark"></i>';
+                muteButton.title = 'Reactivar Sonido';
+            } else {
+                audio.muted = false;
+                muteButton.innerHTML = '<i class="fa-solid fa-volume-high"></i>';
+                muteButton.title = 'Silenciar';
+                currentVolume = newVolume;
+            }
+        }
+        
+        function restartMusic() {
+            if (!audio) return;
+            audio.currentTime = 0;
+            if (audio.paused) {
+                togglePlayPause();
+            }
+        }
+
+        function toggleMusicMenu() {
+            const musicDropdown = document.getElementById('music-dropdown');
+            if (musicDropdown) {
+                 musicDropdown.classList.toggle('active');
+            }
+        }
+
+
+        // --- JavaScript para el Carrusel de Fotos ---
+        const carouselSlide = document.getElementById('carouselSlide');
+        const totalImages = carouselSlide ? carouselSlide.querySelectorAll('img').length : 0;
+        let currentIndex = 0;
+        const intervalTime = 4000; 
+        const userInteractionPause = 8000; 
+        let autoSlideInterval;
+        let userInteractionTimeout;
+
+        function updateCarousel() {
+            if (!carouselSlide || totalImages === 0) return; 
+            const containerWidth = carouselSlide.parentNode.clientWidth;
+            const imgWidth = containerWidth; 
+            
+            carouselSlide.style.transition = `transform 0.8s ease-in-out`;
+            carouselSlide.style.transform = `translateX(${-currentIndex * imgWidth}px)`;
+        }
+
+        function startAutoSlide() {
+            if (totalImages === 0) return;
+            clearInterval(autoSlideInterval); 
+            autoSlideInterval = setInterval(() => {
+                currentIndex++;
+                if (currentIndex >= totalImages) {
+                    currentIndex = 0;
+                }
+                updateCarousel();
+            }, intervalTime);
+        }
+        
+        // Función de reseteo mejorada para asegurar la posición correcta en resize
+        function resetCarouselPosition() {
+             if (!carouselSlide) return;
+             carouselSlide.style.transition = 'none';
+             const containerWidth = carouselSlide.parentNode.clientWidth;
+             carouselSlide.style.transform = `translateX(${-currentIndex * containerWidth}px)`;
+             
+             clearTimeout(userInteractionTimeout); 
+             startAutoSlide();
+        }
+
+        function moveCarousel(direction) {
+            if (totalImages === 0) return;
+            clearInterval(autoSlideInterval); 
+            clearTimeout(userInteractionTimeout); 
+
+            currentIndex += direction;
+            if (currentIndex < 0) {
+                currentIndex = totalImages - 1;
+            } else if (currentIndex >= totalImages) {
+                currentIndex = 0;
+            }
+            updateCarousel();
+            
+            userInteractionTimeout = setTimeout(startAutoSlide, userInteractionPause); 
+        }
+        
+        window.addEventListener('resize', resetCarouselPosition);
+
+
+        // --- JavaScript para los Modales ---
+        function openModal(modalId) {
+            const modal = document.getElementById(modalId);
+            if(modal) {
+                modal.classList.add('active');
+            }
+        }
+
+        function closeModal(modalId) {
+            const modal = document.getElementById(modalId);
+            if(modal) {
+                modal.classList.remove('active');
+            }
+        }
+        
+        function showPhotoMessage(title, message) {
+            const modal = document.getElementById('photoModal');
+            const titleElement = document.getElementById('photoModalTitle');
+            const messageElement = document.getElementById('photoModalMessage');
+            if(modal && titleElement && messageElement) {
+                titleElement.innerText = title;
+                messageElement.innerText = message;
+                modal.classList.add('active');
+            }
+        }
+
+        window.onclick = function(event) {
+            const modals = document.querySelectorAll('.modal');
+            modals.forEach(modal => {
+                if (event.target == modal) {
+                    modal.classList.remove('active');
+                }
+            });
+
+            // Cerrar menú de música si se hace clic fuera
+            const musicDropdown = document.getElementById('music-dropdown');
+            const musicBtn = document.getElementById('music-toggle-button');
+            
+            if (musicDropdown && musicBtn && musicDropdown.classList.contains('active') && !musicDropdown.contains(event.target) && !musicBtn.contains(event.target)) {
+                 musicDropdown.classList.remove('active');
+            }
+        }
+        
+        // --- FUNCIÓN PARA CORAZONES CAYENDO ---
+        function createHeart() {
+            const container = document.getElementById('heart-container');
+            if (!container) return; 
+            
+            const heart = document.createElement('div');
+            heart.classList.add('heart');
+            heart.innerText = '❤️💕'; 
+            
+            heart.style.left = Math.random() * 100 + 'vw';
+            heart.style.fontSize = Math.random() * 1.5 + 0.8 + 'em'; 
+            
+            const duration = Math.random() * 4 + 3;
+            // Usa el keyframe 'fall' definido en el CSS
+            heart.style.animation = `fall ${duration}s linear infinite`;
+            heart.style.animationDelay = `-${Math.random() * 5}s`;
+
+            container.appendChild(heart);
+
+            setTimeout(() => {
+                heart.remove();
+            }, duration * 1000 + 1000); 
+        }
+
+        function startHeartAnimation() {
+            setInterval(createHeart, 300);
+            for (let i = 0; i < 20; i++) {
+                createHeart();
+            }
+        }
+        
+        // --- JAVASCRIPT PARA EL MINIJUEGO DE AMOR (AÑADIDO) ---
+        const quizData = [
+            {
+                question: "¿Cuál es mi recuerdo favorito de nuestro primer encuentro?",
+                answer: "Recuerdo perfectamente el momento en que me miraste coon una sonrriza!"
+            },
+            {
+                question: "¿Qué pequeña cosa tuya amo hacer en secreto?",
+                answer: "Amo verte dormir."
+            },
+            {
+                question: "¿Cuál es el momento más inesperado en el que he pensado 'La amo'?",
+                answer: "Fue un día que me viste hacer el ridículo y te reíste CONMIGO, no DE MÍ. Ahí supe que podía ser yo mismo para siempre contigo."
+            },
+            {
+                question: "¿Qué quiero que hagamos juntos?",
+                answer: "Quiero que nos acurruquemos una noche, pidamos nuestra comida favorita y veamos esa película que hemos pospuesto por años."
+            },
+            {
+                question: "¿Qué me inspira más de ti en mi vida diaria?",
+                answer: "tu dedicacion y tu forma de ser."
+            }
+        ];
+
+        let currentQuizIndex = 0;
+        const quizQuestionElement = document.getElementById('quiz-question');
+        const quizAnswerElement = document.getElementById('quiz-answer');
+        const revealButton = document.getElementById('reveal-button');
+
+        function nextQuestion() {
+            // Avanza al siguiente índice, si llega al final, vuelve al principio
+            currentQuizIndex = (currentQuizIndex + 1) % quizData.length;
+            
+            // Oculta la respuesta anterior
+            quizAnswerElement.style.opacity = '0';
+            quizAnswerElement.innerText = '';
+            
+            // Muestra la nueva pregunta
+            if (quizQuestionElement && quizData.length > 0) {
+                quizQuestionElement.innerText = quizData[currentQuizIndex].question;
+            }
+            
+            // Restablece el botón de revelar
+            revealButton.disabled = false;
+            revealButton.innerText = '✨ ¡Revelar Respuesta Secreta! ✨';
+        }
+
+        function revealAnswer() {
+            if (revealButton.disabled) return;
+            
+            // Muestra la respuesta
+            if (quizAnswerElement && quizData.length > 0) {
+                quizAnswerElement.innerText = quizData[currentQuizIndex].answer;
+                quizAnswerElement.style.opacity = '1';
+            }
+            
+            // Deshabilita el botón de revelar y cambia su texto
+            revealButton.disabled = true;
+            revealButton.innerText = 'Respuesta Revelada ❤️';
+        }
+        /* --- FIN JAVASCRIPT MINIJUEGO --- */
+
+        /* --- JAVASCRIPT PARA EL MINIJUEGO DE MORITA RUNNER (NUEVO) --- */
+        const morita = document.getElementById('morita');
+        const obstacle = document.getElementById('obstacle');
+        const scoreElement = document.getElementById('score');
+        const gameArea = document.getElementById('game-area');
+        const startGameButton = document.getElementById('start-game-button');
+
+        let isJumping = false;
+        let gameLoop;
+        let obstacleInterval;
+        let isGameOver = true;
+        let score = 0;
+
+        const obstacles = ['💖', '🐾', '✨', '⭐'];
+
+        function jump() {
+            if (isJumping || isGameOver) return;
+            isJumping = true;
+            morita.classList.add('jump');
+
+            // Después de la animación de salto, quitar la clase
+            setTimeout(() => {
+                morita.classList.remove('jump');
+                isJumping = false;
+            }, 600); // 0.6s es la duración de la animación morita-jump
+        }
+
+        function createObstacle() {
+            if (isGameOver) return;
+
+            // Selecciona un obstáculo aleatorio
+            const randomObstacle = obstacles[Math.floor(Math.random() * obstacles.length)];
+            obstacle.innerText = randomObstacle;
+
+            // Velocidad y duración de la animación del obstáculo
+            const animationDuration = Math.random() * (1.8 - 1.2) + 1.2; // Entre 1.2s y 1.8s
+            obstacle.style.animation = `move-obstacle ${animationDuration}s linear`;
+            
+            // Un pequeño retraso para el siguiente obstáculo
+            const nextObstacleDelay = Math.random() * (2000 - 1000) + 1000; // Entre 1s y 2s
+            
+            obstacleInterval = setTimeout(createObstacle, nextObstacleDelay);
+        }
+
+        function checkCollision() {
+            if (isGameOver) return;
+
+            const moritaRect = morita.getBoundingClientRect();
+            const obstacleRect = obstacle.getBoundingClientRect();
+            
+            // Si el obstáculo está en pantalla (izquierda > 0)
+            if (obstacleRect.left > 0 && obstacleRect.right < gameArea.getBoundingClientRect().right) {
+                
+                // Lógica de colisión simple: si el gato y el obstáculo se superponen horizontalmente
+                // Y el gato no está lo suficientemente alto (salto)
+                const isHorizontalOverlap = moritaRect.right > obstacleRect.left && moritaRect.left < obstacleRect.right;
+                const isVerticalOverlap = moritaRect.bottom > obstacleRect.top; // Siempre será true si está en el suelo
+
+                if (isHorizontalOverlap && isVerticalOverlap && !isJumping) {
+                    gameOver();
+                    return;
+                }
+
+                // Lógica de puntuación: si el obstáculo pasa al gato
+                if (obstacleRect.right < moritaRect.left + 5) { // +5 para un pequeño margen
+                    score++;
+                    scoreElement.innerText = `Puntos: ${score}`;
+                    // Quitar la animación para forzar la recreación del siguiente obstáculo
+                    obstacle.style.animation = 'none'; 
+                    obstacle.style.right = '-50px'; 
+                }
+            }
+
+            gameLoop = requestAnimationFrame(checkCollision);
+        }
+
+        function startGame() {
+            if (!isGameOver) return;
+
+            isGameOver = false;
+            score = 0;
+            scoreElement.innerText = `Puntos: 0`;
+            startGameButton.innerText = '¡Saltando Ahora! 🏃';
+            startGameButton.disabled = true;
+
+            // Limpiar cualquier animación/bucle anterior
+            clearTimeout(obstacleInterval);
+            cancelAnimationFrame(gameLoop);
+
+            // Restablecer el obstáculo
+            obstacle.style.animation = 'none';
+            obstacle.style.right = '-50px';
+            
+            // Iniciar el juego
+            createObstacle();
+            gameLoop = requestAnimationFrame(checkCollision);
+        }
+
+        function gameOver() {
+            isGameOver = true;
+            clearTimeout(obstacleInterval);
+            cancelAnimationFrame(gameLoop);
+            
+            obstacle.style.animation = 'none';
+            startGameButton.disabled = false;
+            startGameButton.innerText = `Perdiste 😭! Puntos Finales: ${score}. ¡Juega de Nuevo!`;
+            
+            alert(`¡Juego Terminado! 😭 Lograste ${score} puntos. ¡Te amo!`);
+        }
+
+        // --- Eventos de Salto ---
+        // Click en la ventana
+        window.addEventListener('click', jump); 
+        // Presionar la barra espaciadora
+        document.addEventListener('keydown', (e) => {
+            if (e.code === 'Space' || e.key === ' ' || e.keyCode === 32) {
+                e.preventDefault(); 
+                jump();
+            }
+        });
+        // Tocar el área de juego (para móviles)
+        gameArea.addEventListener('touchstart', jump); 
+
+        /* --- FIN JAVASCRIPT MINIJUEGO MORITA RUNNER --- */
+
+
+        // --- LÓGICA DE INICIO ---
+        window.onload = function() {
+            // Se llama una vez para establecer el tamaño inicial
+            updateCarousel(); 
+
+            const overlay = document.getElementById('welcome-overlay');
+            const musicGate = document.getElementById('music-gate');
+            
+            setTimeout(() => {
+                if(overlay) overlay.classList.add('hidden');
+            }, 3000); 
+            
+            setTimeout(() => {
+                if(overlay) overlay.remove();
+                if(musicGate) musicGate.classList.add('visible'); 
+                // Asegurar que el audio esté configurado con el volumen inicial
+                if (audio && volumeSlider) {
+                    currentVolume = parseFloat(volumeSlider.value) / 100;
+                    audio.volume = currentVolume;
+                }
+            }, 4500); 
+            
+            // Inicializar el juego de preguntas al cargar la página
+             if (quizQuestionElement && quizData.length > 0) {
+                 quizQuestionElement.innerText = quizData[0].question;
+                 quizAnswerElement.style.opacity = '0'; // Asegura que esté oculto al cargar
+             }
+        };
+    </script>
+</body>
+</html>
